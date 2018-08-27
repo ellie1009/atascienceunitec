@@ -11,23 +11,25 @@ complete <- function(directory, id=1:332){
   ## 2  1041
   ## ...
   ## where 'id' is the monitor ID number and 'nobs' is the
-  ## number of domplete cases
+  ## number of complete cases
   
+  #set the working directory
   setwd(directory)
   
   # Create an empty data frame with column names
-  df <- data.frame( "id" = integer(0), "nobs" = integer(0))
-  
+  complete_cases <- data.frame( "id" = integer(0), "nobs" = integer(0))
   
   for(i in id)
   {
-    #open file
-    f <- read.csv(paste0(formatC(i, width = 3, format = "d", flag = "0"),".csv"))
+    #open file 
+    #formatC function is used for converting integer to string with '0' ex) 1 -> 001
+    filename <- formatC(i, width = 3, format = "d", flag = "0")
+    #paste0 is used for making csv file ex) 001 -> 001.csv
+    new_monitor <- read.csv(paste0(filename,".csv"))
     
-    
-    df[i,] <- list(i, sum(complete.cases(f)))
-    
+    #add a new list to data frame
+    complete_cases[nrow(complete_cases) + 1,] <- list(i, sum(complete.cases(new_monitor)))
+
   }
-  
-  df
+  complete_cases
 }

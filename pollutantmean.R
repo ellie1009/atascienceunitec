@@ -13,22 +13,26 @@ pollutantmean <- function(directory, pollutant, id=1:332){
   ## in the 'id' vector (ignoring NA values)
   ## NOTE: Do not round the result!
   
+  #set the working directory
   setwd(directory)
+  
+  # Create an empty data frame 
+  total <- data.frame()
   
   for(i in id)
   {
-    #open file
-    df <- read.csv(paste0(formatC(i, width = 3, format = "d", flag = "0"),".csv"))
-    
-    
-    if(i == 1)
-      total <- df
-    else
-      rbind(total, df)
+    #open file 
+    #formatC function is used for converting integer to string with '0' ex) 1 -> 001
+    filename <- formatC(i, width = 3, format = "d", flag = "0")
+    #paste0 is used for making csv file ex) 001 -> 001.csv
+    new_monitor <- read.csv(paste0(filename,".csv"))
+
+    total <- rbind(total, new_monitor)
   }
   
+  #return the mean of the pollutant according to pollutant input value
   if(pollutant == "sulfate")
-    print(mean(total$sulfate, na.rm = TRUE))
+    mean(total$sulfate, na.rm = TRUE)
   else if(pollutant == "nitrate")
-    print(mean(total$nitrate, na.rm = TRUE))
+    mean(total$nitrate, na.rm = TRUE)
 }
