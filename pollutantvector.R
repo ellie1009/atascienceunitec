@@ -26,10 +26,10 @@ pollutantvector <- function(directory, pollutant, id=1:332, p){
     #paste0 is used for making csv file ex) 001 -> 001.csv
     new_monitor <- read.csv(paste0(filename,".csv"))
     
-    #according to pullutant input value, define column which will be anlaysed
+    #according to pollutant input value, define column which will be anlaysed
     if(pollutant == "sulfate")
       pollutant_column <- new_monitor$sulfate
-    else if(pullutant == "nitrate")
+    else if(pollutant == "nitrate")
       pollutant_column <- new_monitor$nitrate
    
     #check the pollutant's value is greater than 'p'

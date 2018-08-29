@@ -24,14 +24,14 @@ corr <- function(directory, threshold = 0){
     #paste0 is used for making csv file ex) 001 -> 001.csv
     new_monitor <- read.csv(paste0(filename,".csv"))
   
-    if (sum(complete.cases(new_monitor)) >= threshold)
+    #check the number of complete cases of monitor is greater than threshold
+    if (sum(complete.cases(new_monitor)) > threshold)
     {
       x <- new_monitor$sulfate
       y <- new_monitor$nitrate
     
-      #correlations[i] <- cor(x,y, use = "complete.obs")
-      
-      correlations[length(correlations)+1] <- cor(x,y, use = "complete.obs")
+      #calculate correlation while ignore NA value
+      correlations <- append(correlations, cor(x,y, use = "complete.obs"))
     }
   }
   
